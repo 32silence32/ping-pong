@@ -49,10 +49,13 @@ class Player2(Game):
         if keys [K_s] and self.rect.y <= 670:
             self.rect.y += self.speed
         
-        
+stolb = Player('333.jpg', randint(300,400), randint(300,600),  0)
+stolb1 = Player('333.jpg', randint(500,600), randint(600,700), 0)
+stolb2 = Player('333.jpg', randint(900,1100), randint(100,200), 0)
 tester2  = Player2('121.png', 0 , 300, 4)
 tester = Player('121.png', 1150, 300, 4)
 ball = Game2('images.png', 500, 300,1)
+score = 0
 
 font.init()
 font = font.Font(None, 35)
@@ -78,28 +81,46 @@ while run:
     if sprite.collide_rect(tester2, ball) or sprite.collide_rect(tester, ball):
         speed_x *= -1
         speed_y *= 1
+        score+=1
+        if score % 2 == 0 and score != 0:
+            speed_x *= 2    
+            speed_y *= 2   
+
     if ball.rect.y <= 0:
         speed_y *= -1
         speed_x *= 1
        
+        
+    if sprite.collide_rect(stolb, ball) or sprite.collide_rect(stolb1, ball) or sprite.collide_rect(stolb2,ball):
+        speed_x *= -1
+        speed_y *= 1
+
+        
     if ball.rect.x >= 1150:
         speed_x *= 0
         speed_y *= 0
         window.blit(lose2, (500,200))
         game_over = True
+        tester.speed = 0
+        tester2.speed = 0
         
-    if ball.rect.x <= 0:
+    if ball.rect.x <= 10:
         speed_x *= 0
         speed_y *= 0
         window.blit(lose1, (500,200))
         game_over = True
-        
+        tester.speed = 0
+        tester2.speed = 0
     
         
+    score123 = font.render(str(score), True, (180,180,0))
+    
     
         
-    
-        
+    window.blit(score123, (500,300))
+    stolb.reset()   
+    stolb1.reset()
+    stolb2.reset()
     tester.reset()
     tester2.reset()
     ball.reset()
